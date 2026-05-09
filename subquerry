@@ -1,0 +1,77 @@
+create database if not exists College;
+
+use College;
+
+create table department(
+    dept_id int primary key,
+    dept_name varchar(30)
+);
+
+insert into department values
+(1,"Computer"),
+(2,"IT"),
+(3,"Mechanical"),
+(4,"Civil");
+
+select * from department;
+
+create table student(
+    student_id int primary key,
+    name varchar(30),
+    marks int,
+    dept_id int,
+
+    foreign key(dept_id)
+    references department(dept_id)
+);
+
+insert into student values
+(101,"Rahul",85,1),
+(102,"Aman",78,2),
+(103,"Priya",92,1),
+(104,"Karan",67,3),
+(105,"Riya",88,2);
+
+select * from student;
+
+select *
+from student
+where marks > (
+    select avg(marks)
+    from student
+);
+
+select *
+from student
+where dept_id = (
+    select dept_id
+    from department
+    where dept_name = "Computer"
+);
+
+select *
+from student
+where marks = (
+    select max(marks)
+    from student
+);
+
+select dept_name
+from department
+where dept_id = (
+    select dept_id
+    from student
+    where name = "Rahul"
+);
+
+select *
+from student
+where marks > (
+    select avg(s.marks)
+    from student s
+    where s.dept_id = (
+        select dept_id
+        from department
+        where dept_name = "IT"
+    )
+);
