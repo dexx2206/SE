@@ -1,0 +1,95 @@
+use CompanyDB
+
+db.createCollection("employees")
+
+db.employees.insertMany([
+{
+    emp_id: 101,
+    name: "Rahul",
+    department: "IT",
+    salary: 50000,
+    hire_date: "2021-01-15"
+},
+{
+    emp_id: 102,
+    name: "Aman",
+    department: "HR",
+    salary: 40000,
+    hire_date: "2020-03-10"
+},
+{
+    emp_id: 103,
+    name: "Priya",
+    department: "IT",
+    salary: 65000,
+    hire_date: "2022-06-20"
+},
+{
+    emp_id: 104,
+    name: "Karan",
+    department: "Finance",
+    salary: 55000,
+    hire_date: "2019-08-25"
+},
+{
+    emp_id: 105,
+    name: "Riya",
+    department: "HR",
+    salary: 45000,
+    hire_date: "2023-02-18"
+}
+])
+
+db.employees.find()
+
+db.employees.aggregate([
+{
+    $group: {
+        _id: "$department",
+        total_salary: { $sum: "$salary" },
+        minimum_salary: { $min: "$salary" },
+        maximum_salary: { $max: "$salary" },
+        average_salary: { $avg: "$salary" },
+        employee_count: { $sum: 1 },
+        employee_names: { $push: "$name" }
+    }
+}
+])
+
+db.employees.aggregate([
+{
+    $sort: { hire_date: 1 }
+},
+{
+    $group: {
+        _id: null,
+        first_hired_employee: { $first: "$name" },
+        last_hired_employee: { $last: "$name" }
+    }
+}
+])
+
+db.employees.aggregate([
+{
+    $match: {
+        salary: { $gt: 45000 }
+    }
+},
+{
+    $project: {
+        _id: 0,
+        name: 1,
+        department: 1,
+        salary: 1
+    }
+},
+{
+    $sort: {
+        salary: -1
+    }
+}
+])
+
+db.employees.createIndex({ name: 1 })
+
+db.employees.getIndexes()
