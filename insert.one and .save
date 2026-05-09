@@ -1,0 +1,67 @@
+use CollegeDB
+
+db.createCollection("student")
+
+show collections
+
+db.student.insertOne({
+    student_id: 101,
+    name: "Rahul",
+    age: 20,
+    marks: 85,
+    department: "Computer"
+})
+
+db.student.save({
+    student_id: 102,
+    name: "Aman",
+    age: 21,
+    marks: 78,
+    department: "IT"
+})
+
+db.student.save({
+    student_id: 103,
+    name: "Priya",
+    age: 22,
+    marks: 92,
+    department: "Computer"
+})
+
+db.student.save({
+    student_id: 104,
+    name: "Karan",
+    age: 20,
+    marks: 67,
+    department: "Mechanical"
+})
+
+db.student.save({
+    student_id: 105,
+    name: "Riya",
+    age: 19,
+    marks: 88,
+    department: "Civil"
+})
+
+db.student.find()
+
+db.student.find({ marks: { $gt: 80 } })
+
+db.student.find({
+    $and: [
+        { marks: { $gt: 70 } },
+        { age: { $lt: 22 } }
+    ]
+})
+
+db.student.updateOne(
+    { student_id: 101 },
+    { $set: { marks: 90 } }
+)
+
+db.student.find()
+
+db.student.deleteOne({ student_id: 104 })
+
+db.student.find()
