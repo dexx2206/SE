@@ -1,0 +1,75 @@
+create database if not exists College;
+
+use College;
+
+create table department(
+    dept_id int primary key,
+    dept_name varchar(30)
+);
+
+select * from department;
+
+insert into department values
+(1,"Computer"),
+(2,"IT"),
+(3,"Mechanical"),
+(4,"Civil"),
+(5,"Electrical");
+
+select * from department;
+
+create table student(
+    student_id int primary key,
+    name varchar(30),
+    marks int,
+    dept_id int,
+
+    foreign key(dept_id)
+    references department(dept_id)
+);
+
+select * from student;
+
+insert into student values
+(101,"Rahul",85,1),
+(102,"Aman",78,2),
+(103,"Priya",92,1),
+(104,"Karan",67,3),
+(105,"Riya",88,5);
+
+select * from student;
+
+select student.student_id,
+       student.name,
+       student.marks,
+       department.dept_name
+from student
+inner join department
+on student.dept_id = department.dept_id;
+
+select student.student_id,
+       student.name,
+       department.dept_name
+from student
+left join department
+on student.dept_id = department.dept_id;
+
+select student.student_id,
+       student.name,
+       department.dept_name
+from student
+right join department
+on student.dept_id = department.dept_id;
+
+create view student_view as
+select student.student_id,
+       student.name,
+       student.marks,
+       department.dept_name
+from student
+inner join department
+on student.dept_id = department.dept_id;
+
+select * from student_view;
+
+drop view student_view;
