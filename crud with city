@@ -1,0 +1,97 @@
+use CollegeDB
+
+db.createCollection("students")
+
+show collections
+
+db.students.insertMany([
+{
+    name: "Rahul",
+    age: 20,
+    course: "Computer",
+    marks: 85,
+    city: "Mumbai"
+},
+{
+    name: "Aman",
+    age: 21,
+    course: "IT",
+    marks: 72,
+    city: "Pune"
+},
+{
+    name: "Priya",
+    age: 19,
+    course: "Computer",
+    marks: 91,
+    city: "Mumbai"
+},
+{
+    name: "Karan",
+    age: 22,
+    course: "Mechanical",
+    marks: 58,
+    city: "Nagpur"
+},
+{
+    name: "Riya",
+    age: 20,
+    course: "Civil",
+    marks: 76,
+    city: "Pune"
+}
+])
+
+db.students.find()
+
+db.students.find({
+    marks: { $gt: 70 }
+})
+
+db.students.updateOne(
+{
+    name: "Rahul"
+},
+{
+    $set: { marks: 95 }
+}
+)
+
+db.students.find()
+
+db.students.updateMany(
+{
+    city: "Pune"
+},
+{
+    $set: { course: "AI" }
+}
+)
+
+db.students.find()
+
+db.students.deleteOne({
+    name: "Karan"
+})
+
+db.students.find()
+
+db.students.deleteMany({
+    marks: { $lt: 70 }
+})
+
+db.students.find()
+
+db.students.find({
+    $and: [
+        { marks: { $gt: 60 } },
+        { age: { $lt: 22 } }
+    ]
+})
+
+db.students.find({
+    $or: [
+        { city: "Mumbai" },
+        { city: "Pune" }
+    ]
+})
