@@ -1,0 +1,109 @@
+create database College;
+
+
+use College;
+
+
+create table department(
+    dept_id int primary key,
+    dept_name varchar(30) unique not null,
+    block varchar(20) check(block <> '')
+);
+
+select * from department;
+
+
+insert into department values
+(1,"Computer","C-Block"),
+(2,"IT","A-Block"),
+(3,"Mechanical","B-Block");
+
+select * from department;
+
+
+create table student(
+    student_id int primary key,
+    student_name varchar(30) not null,
+    email varchar(50) unique,
+    CGPA float check(CGPA <= 10),
+    dept_id int,
+
+    foreign key(dept_id)
+    references department(dept_id)
+);
+
+select * from student;
+
+
+insert into student values
+(101,"Rahul","rahul@gmail.com",8.5,1),
+(102,"Aman","aman@gmail.com",7.9,2),
+(103,"Priya","priya@gmail.com",9.1,1),
+(104,"Karan","karan@gmail.com",8.0,3),
+(105,"Riya","riya@gmail.com",9.4,1);
+
+select * from student;
+
+
+alter table student
+add phone varchar(10);
+
+select * from student;
+
+
+update student set phone="9876543210" where student_id=101;
+update student set phone="9876543211" where student_id=102;
+update student set phone="9876543212" where student_id=103;
+update student set phone="9876543213" where student_id=104;
+update student set phone="9876543214" where student_id=105;
+
+select * from student;
+
+
+select count(*) as Total_Students
+from student;
+
+
+select max(CGPA) as Highest_CGPA
+from student;
+
+
+select min(CGPA) as Lowest_CGPA
+from student;
+
+
+select avg(CGPA) as Average_CGPA
+from student;
+
+
+select sum(CGPA) as Total_CGPA
+from student;
+
+
+select dept_id, count(*) as Student_Count
+from student
+group by dept_id;
+
+
+select dept_id, avg(CGPA) as Average_CGPA
+from student
+group by dept_id;
+
+
+select dept_id, avg(CGPA) as Average_CGPA
+from student
+group by dept_id
+having avg(CGPA) > 8.5;
+
+
+rename table student to students;
+
+select * from students;
+
+
+truncate table students;
+
+select * from students;
+
+
+drop table students;
