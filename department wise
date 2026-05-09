@@ -1,0 +1,56 @@
+use CollegeDB
+
+db.createCollection("student")
+
+db.student.insertMany([
+{
+    student_id: 101,
+    name: "Rahul",
+    marks: 85,
+    department: "Computer"
+},
+{
+    student_id: 102,
+    name: "Aman",
+    marks: 78,
+    department: "IT"
+},
+{
+    student_id: 103,
+    name: "Priya",
+    marks: 92,
+    department: "Computer"
+},
+{
+    student_id: 104,
+    name: "Karan",
+    marks: 67,
+    department: "Mechanical"
+},
+{
+    student_id: 105,
+    name: "Riya",
+    marks: 88,
+    department: "IT"
+}
+])
+
+db.student.find()
+
+db.student.aggregate([
+{
+    $group: {
+        _id: "$department",
+        total_students: { $sum: 1 }
+    }
+},
+{
+    $sort: {
+        total_students: -1
+    }
+}
+])
+
+db.student.createIndex({ name: 1 })
+
+db.student.getIndexes()
