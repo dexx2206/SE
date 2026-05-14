@@ -1,0 +1,71 @@
+CREATE DATABASE temp1;
+
+USE temp1;
+
+CREATE TABLE Employee (
+    EmpID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Department VARCHAR(30),
+    Salary INT
+);
+
+SELECT * FROM Employee
+
+INSERT INTO Employee VALUES
+(1, 'Ankit', 'HR', 30000),
+(2, 'Riya', 'IT', 45000),
+(3, 'Karan', 'Sales', 40000);
+
+
+UPDATE Employee
+SET Salary = Salary + 5000
+WHERE Department = 'IT';
+
+SELECT * FROM Employee
+WHERE Salary > 30000 AND Department = 'IT';
+
+SELECT Name FROM Employee
+UNION
+SELECT Name FROM Employee;
+
+SELECT * FROM Employee
+WHERE Name LIKE 'R%';
+
+SELECT UPPER(Name) FROM Employee;
+
+SELECT Name, LENGTH(Name) FROM Employee;
+
+CREATE USER 'student1'@'localhost'
+IDENTIFIED BY 'pass123';
+
+GRANT SELECT, INSERT
+ON Employee
+TO 'student1'@'localhost';
+
+REVOKE INSERT
+ON Employee
+FROM 'student1'@'localhost';
+
+CREATE ROLE manager;
+
+GRANT SELECT, UPDATE
+ON Employee
+TO manager;
+
+GRANT manager
+TO 'student1'@'localhost';
+
+START TRANSACTION;
+
+INSERT INTO Employee
+VALUES (4, 'Neha', 'Finance', 50000);
+
+SAVEPOINT sp1;
+
+UPDATE Employee
+SET Salary = 55000
+WHERE EmpID = 4;
+
+ROLLBACK TO sp1;
+
+COMMIT;
