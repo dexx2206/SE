@@ -1,0 +1,130 @@
+CREATE DATABASE company_db;
+USE company_db;
+
+CREATE TABLE Department (
+    Department_ID INT PRIMARY KEY,
+    Department_Name VARCHAR(50)
+);
+
+CREATE TABLE Employee (
+    Employee_ID INT PRIMARY KEY,
+    Name VARCHAR(50),
+    Department_ID INT,
+    Salary INT,
+
+    FOREIGN KEY (Department_ID)
+    REFERENCES Department(Department_ID)
+);
+
+INSERT INTO Department VALUES
+(1, 'IT'),
+(2, 'HR'),
+(3, 'Finance'),
+(4, 'Marketing'),
+(5, 'Sales');
+
+INSERT INTO Employee VALUES
+(101, 'Rahul', 1, 60000),
+(102, 'Aman', 2, 45000),
+(103, 'Priya', 1, 75000),
+(104, 'Karan', 3, 50000),
+(105, 'Riya', NULL, 40000);
+
+SELECT Employee.Employee_ID,
+       Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+INNER JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID;
+
+SELECT Employee.Employee_ID,
+       Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+LEFT JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID;
+
+SELECT Employee.Employee_ID,
+       Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+RIGHT JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID;
+
+SELECT Employee.Employee_ID,
+       Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+LEFT JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID
+
+UNION
+
+SELECT Employee.Employee_ID,
+       Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+RIGHT JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID;
+
+CREATE VIEW employee_view AS
+
+SELECT Employee.Name,
+       Department.Department_Name,
+       Employee.Salary
+
+FROM Employee
+
+LEFT JOIN Department
+
+ON Employee.Department_ID =
+   Department.Department_ID;
+
+SELECT * FROM employee_view;
+
+CREATE VIEW high_salary_view AS
+
+SELECT Name, Salary
+
+FROM Employee
+
+WHERE Salary > 50000;
+
+SELECT * FROM high_salary_view;
+
+CREATE OR REPLACE VIEW high_salary_view AS
+
+SELECT Name, Salary
+
+FROM Employee
+
+WHERE Salary > 45000;
+
+SELECT * FROM high_salary_view;
+
+DROP VIEW high_salary_view;
